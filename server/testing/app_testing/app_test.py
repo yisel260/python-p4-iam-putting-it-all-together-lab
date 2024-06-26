@@ -276,6 +276,8 @@ class TestRecipeIndex:
         
             response = client.get('/recipes')
             response_json = response.get_json()
+            print(response_json)  # Add this line to see the response JSON
+
 
             assert response.status_code == 200
             for i in range(15):
@@ -340,9 +342,10 @@ class TestRecipeIndex:
             assert response.status_code == 201
 
             response_json = response.get_json()
+            print(response_json)
             
             with client.session_transaction() as session:
-                
+              #  breakpoint()
                 new_recipe = Recipe.query.filter(Recipe.user_id == session['user_id']).first()
 
             assert response_json['title'] == new_recipe.title
